@@ -32,15 +32,15 @@ classifier.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metric
 from keras.preprocessing.image import ImageDataGenerator
 train_datagen = ImageDataGenerator(rescale = 1./255,shear_range = 0.2,zoom_range = 0.2,horizontal_flip = True)
 test_datagen = ImageDataGenerator(rescale = 1./255)
-training_set = train_datagen.flow_from_directory('animals/training_set',target_size = (64, 64))
-test_set = test_datagen.flow_from_directory('animals/testing_set',target_size = (64, 64))
+training_set = train_datagen.flow_from_directory('images/training_set',target_size = (64, 64))
+test_set = test_datagen.flow_from_directory('images/testing_set',target_size = (64, 64))
 print(training_set)
 classifier.fit_generator(training_set,steps_per_epoch = 25,epochs = 5,validation_data = test_set,validation_steps = 2000)
 
 # Part 3 - Making new predictions
 import numpy as np
 from keras.preprocessing import image
-test_image = image.load_img('animals/validation_set/OIP-4rPAIFx0zpiMrovgDrmqLgHaF6.jpeg', target_size = (64, 64))
+test_image = image.load_img('images/validation_set/OIP-4rPAIFx0zpiMrovgDrmqLgHaF6.jpeg', target_size = (64, 64))
 test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
 result = list(classifier.predict(test_image))
